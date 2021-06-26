@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import com.veiculos.apirest.cloud.Feign;
+import com.veiculos.apirest.cloud.Marca;
 import com.veiculos.apirest.models.Usuario;
 import com.veiculos.apirest.models.Veiculos;
 import com.veiculos.apirest.models.VeiculosDTO;
@@ -24,15 +26,19 @@ import io.swagger.annotations.ApiOperation;
 @RequestMapping(value = "/use")
 @Api(value = "API REST Veiculos")
 @CrossOrigin(origins = "*")
+
 public class VeiculosResouces {
+	
+	@Autowired
+	Feign feign;
+	
 	@Autowired
 	VeiculosRepository veiculosRepository;
 
 	@Autowired
 	UsuarioRepository usuarioRepository;
-	
 
-	@GetMapping("/produto")
+	@GetMapping("/listaveiculos")
 	@ApiOperation(value="Retorna lista de veiculos para o cpf do usuário")
 	public List<String> listaVeiculos(String cpf){
 		Usuario usuario = usuarioRepository.findByCpf(cpf);
@@ -58,8 +64,9 @@ public class VeiculosResouces {
 			System.out.println(e.getMessage());
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
 		}
+	}
+	
 		
-		}
 	private VeiculosDTO toVeiculosDTO(Veiculos veiculo) {
 		var veiculosDTO = new VeiculosDTO();
 		veiculosDTO.setId(veiculo.getId());

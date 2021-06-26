@@ -10,23 +10,34 @@ public class VeiculosDTO {
 
 	private String ano;
 
+	private Double preço;
+	
 	private String cpf;
 
 	public Veiculos toEntity(Usuario usuario) {
-		return new Veiculos(this.id, this.marca, this.modelo, this.ano, usuario);
+		return new Veiculos(this.id, this.marca, this.modelo, this.ano,this.preço, usuario);
 	}
 
 	public VeiculosDTO() {
 
 	}
 
-	public VeiculosDTO(int id, String marca, String modelo, String ano, String cpf) {
+	public VeiculosDTO(int id, String marca, String modelo, String ano, Double preço, String cpf) {
 		super();
 		this.id = id;
 		this.marca = marca;
 		this.modelo = modelo;
 		this.ano = ano;
+		this.preço = preço;
 		this.cpf = cpf;
+	}
+
+	public Double getPreço() {
+		return preço;
+	}
+
+	public void setPreço(Double preço) {
+		this.preço = preço;
 	}
 
 	public int getId() {
@@ -78,6 +89,7 @@ public class VeiculosDTO {
 		result = prime * result + id;
 		result = prime * result + ((marca == null) ? 0 : marca.hashCode());
 		result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
+		result = prime * result + ((preço == null) ? 0 : preço.hashCode());
 		return result;
 	}
 
@@ -111,6 +123,11 @@ public class VeiculosDTO {
 			if (other.modelo != null)
 				return false;
 		} else if (!modelo.equals(other.modelo))
+			return false;
+		if (preço == null) {
+			if (other.preço != null)
+				return false;
+		} else if (!preço.equals(other.preço))
 			return false;
 		return true;
 	}

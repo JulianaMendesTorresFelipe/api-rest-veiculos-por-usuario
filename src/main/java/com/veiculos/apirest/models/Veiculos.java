@@ -28,7 +28,10 @@ public class Veiculos implements Serializable {
 			
 			@Column(nullable=false)
 			private String ano;
-
+			
+			@Column(nullable=false)
+			private Double preço;
+			
 		    @OneToOne
 		    @JoinColumn(name="cpf", referencedColumnName="cpf", nullable=false)
 		    private Usuario usuario;
@@ -39,20 +42,29 @@ public class Veiculos implements Serializable {
 		    	
 		    }
 		    
-			public Veiculos(int id, String marca, String modelo, String ano, Usuario usuario) {
+			public Veiculos(int id, String marca, String modelo, String ano, Double preço, Usuario usuario) {
 				super();
 				this.id = id;
 				this.marca = marca;
 				this.modelo = modelo;
 				this.ano = ano;
+				this.preço = preço;
 				this.usuario = usuario;
 					}
 		
 			 public Veiculos toEntity(Usuario usuario) {
-					return new Veiculos(this.id, this.marca, this.modelo, this.ano, usuario);
+					return new Veiculos(this.id, this.marca, this.modelo, this.ano,this.preço, usuario);
 				}
 			    
 		    
+			public Double getPreço() {
+				return preço;
+			}
+
+			public void setPreço(Double preço) {
+				this.preço = preço;
+			}
+
 			public int getId() {
 				return id;
 			}
@@ -101,6 +113,7 @@ public class Veiculos implements Serializable {
 				result = prime * result + id;
 				result = prime * result + ((marca == null) ? 0 : marca.hashCode());
 				result = prime * result + ((modelo == null) ? 0 : modelo.hashCode());
+				result = prime * result + ((preço == null) ? 0 : preço.hashCode());
 				result = prime * result + ((usuario == null) ? 0 : usuario.hashCode());
 				return result;
 			}
@@ -130,6 +143,11 @@ public class Veiculos implements Serializable {
 					if (other.modelo != null)
 						return false;
 				} else if (!modelo.equals(other.modelo))
+					return false;
+				if (preço == null) {
+					if (other.preço != null)
+						return false;
+				} else if (!preço.equals(other.preço))
 					return false;
 				if (usuario == null) {
 					if (other.usuario != null)
